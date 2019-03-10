@@ -21,15 +21,15 @@ class fringe:
         else:
             return self.H.l_hi < other.H.l_hi
 
-#    def __eq__(self, other):
-#        if not isinstance(other, fringe):
-#            return NotImplemented
-#        return self.L.l_lo == other.L.l_lo
+    def __eq__(self, other):
+        if not isinstance(other, fringe):
+            return NotImplemented
+        return self.L.l_lo == other.L.l_lo
 
-#    def __repr__(self):
-#        return ('\33[1m\33[91m{\33[0m' +
-#                ' '.join([repr(c) for c in self.fops]) +
-#                '\33[91m\33[1m}\33[0m')
+    def __repr__(self):
+        return ('\33[1m\33[91m{\33[0m' +
+                ' '.join([repr(c) for c in self.fops]) +
+                '\33[91m\33[1m}\33[0m')
 
     @property
     def H(self):
@@ -40,10 +40,10 @@ class fringe:
         return self.fops[-1]
 
     def merge(self, other):
-#        assert(self.fops and other.fops)
-#        assert(self < other or self == other)
-#        assert(all(f.last_of_left_is_lowest() for f in other.fops))
-#        assert(all(f.last_of_right_is_lowest() for f in other.fops))
+        assert(self.fops and other.fops)
+        assert(self < other or self == other)
+        assert(all(f.last_of_left_is_lowest() for f in other.fops))
+        assert(all(f.last_of_right_is_lowest() for f in other.fops))
         if not other._oneSided():
             return False
 
@@ -70,8 +70,8 @@ class fringe:
         if other.H.left:
             self.fops.extendleft([other.H])
 
-#        assert(all(f.last_of_left_is_lowest() for f in self.fops))
-#        assert(all(f.last_of_right_is_lowest() for f in self.fops))
+        assert(all(f.last_of_left_is_lowest() for f in self.fops))
+        assert(all(f.last_of_right_is_lowest() for f in self.fops))
         return True
 
     def _oneSided(self):

@@ -6,9 +6,9 @@ A python code which implements the LR-algorithm for testing planarity of given g
 ## 説明
 **is_planar** は、グラフの平面性判定を線形時間で解決する LR-アルゴリズムの python コードです。
 
-アルゴリズムの詳細は、[Left-right planarity test: wikipedia](https://en.wikipedia.org/wiki/Left-right_planarity_test)や参考文献[1, 2, 3] をご覧ください。
+アルゴリズムの詳細は、[Left-right planarity test: wikipedia](https://en.wikipedia.org/wiki/Left-right_planarity_test)や参考文献 [1, 2, 3] をご覧ください。
 
-**is_planar** は、たかだか1回の深さ優先探索の実行時間に比例する計算量で与えられたグラフの平面性を判定することができます。その簡潔さはアルゴリズム理解が容易なだけでなく、いくつかある線形時間アルゴリズムのなかでも最速の1つであることが知られています[4]。
+**is_planar** は、たかだか1回の深さ優先探索に比例する計算量で、与えられたグラフの平面性を判定することができます。その簡潔さはアルゴリズム理解が容易なだけでなく、いくつかある線形時間アルゴリズムのなかでも最速であることが知られています [4]。
 
 **is_planar** はアルファ版です。堅実な平面性判定が目的なら [networkx](https://networkx.github.io) の [check_planarity](https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.planarity.check_planarity.html) や、[BGL](https://www.boost.org/doc/libs/1_37_0/libs/graph/doc/planar_graphs.html) の [boyer_myrvold_planar_test.hpp](https://www.boost.org/doc/libs/1_37_0/boost/graph/boyer_myrvold_planar_test.hpp) などのご利用をお勧めいたします。
 
@@ -23,17 +23,17 @@ A python code which implements the LR-algorithm for testing planarity of given g
 
 ## Todo
 - API / コメント整備
+    - docstring 
 - テストの充実
     - 各モジュール単位で単体テストを行う
-    - 平面グラフのランダム生成、および小さいグラフの列挙
+    - 平面グラフのランダム生成
+    - 小さい平面グラフの列挙
     - 与えられたグラフに対する全 DFS 木でテスト
 - 機能追加
-    - 平面埋め込み / Kuratowski 部分グラフの抽出
+    - 平面埋め込みの計算
+    - Kuratowski 部分グラフの抽出
     - 平面描画 (Tutte 埋め込みなど)
     - Boyer-Myrvold アルゴリズム[5] の実装
-
-## 作者
-[satemochi](https://github.com/satemochi/)
 
 ## 参考文献
 1. H. de Fraysseix and P. Ossona de Mendez. (2012). "**Trémaux trees and planarity**", European Journal of Combinatorics, 33 (3): 279–293.
