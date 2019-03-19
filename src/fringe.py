@@ -18,8 +18,7 @@ class fringe:
         diff = self.L.l_lo - other.L.l_lo
         if diff != 0:
             return diff < 0
-        else:
-            return self.H.l_hi < other.H.l_hi
+        return self.H.l_hi < other.H.l_hi
 
     def __eq__(self, other):
         if not isinstance(other, fringe):
@@ -85,10 +84,10 @@ class fringe:
         return True
 
     def prune(self, dfs_height):
-        while (self.fops and self.H.left and self.H.l_hi >= dfs_height-1):
+        while (self.fops and self.H.left and self.H.l_hi >= dfs_height):
             if len(self.H.left) == 1:
                 self.fops.popleft()
             else:
                 self.H.left.popleft()
-        while (self.fops and self.H.right and self.H.r_hi >= dfs_height-1):
+        while (self.fops and self.H.right and self.H.r_hi >= dfs_height):
             self.H.right.popleft()

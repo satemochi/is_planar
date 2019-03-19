@@ -10,7 +10,7 @@ with open('LICENSE') as fp:
     license = fp.read()
 
 setup(
-    name="is_planarity",
+    name="is_planar",
     version="0.0.1",
     description="a python code which implements the LR-algorithm for planarity testing given graphs",
     long_description=readme,
