@@ -96,18 +96,19 @@ def lr_algorithm(g, root, visited):
         except StopIteration:
             dfs_stack.pop()
             if len(fringes) > 1:
-                f = merge_fringes(fringes[-1], dfs_heights[dfs_stack[-1][0]])
+                f = merge_fringes(fringes[-1])
                 if f is None:
                     return False
                 fringes.pop()
+                f.prune(dfs_heights[dfs_stack[-1][0]])
                 if f.fops:
                     fringes[-1].append(f)
     return True
 
 
-def merge_fringes(upper_fringes, dfs_height):
+def merge_fringes(upper_fringes):
     """
-    merge fringes & prune processed back edges
+    merge (upper) fringes
 
     In order to construct the fringe of the tree edge (x, y) that is top of
     dfs_stack, merge_fringes merges all fringes of tree edges in $\omega^+(y).$
@@ -118,14 +119,6 @@ def merge_fringes(upper_fringes, dfs_height):
         upper_fringes consists of all fringes of tree edges in $\omega^+(y).$
         Further, for each back edge e in upper_fringes, the DFS height of
         low-point ${\rm low}(e)$ is lower than dfs_heights[y].
-
-    dfs_height : int
-        To be used as the threshold value at method prune of fringe.
-        The created fringe new_fringe has no back edge greater
-        than or equal to dfs_heights[x].
-
-        I think this function should be separated by two; merge fringes and
-        prune back edges, for simplicity.
 
     Returns
     -------
@@ -140,5 +133,4 @@ def merge_fringes(upper_fringes, dfs_height):
         for f in islice(upper_fringes, 1, len(upper_fringes)):
             if not new_fringe.merge(f):
                 return
-        new_fringe.prune(dfs_height)
     return new_fringe

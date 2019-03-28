@@ -43,7 +43,7 @@ class fringe:
         assert(self < other or self == other)
         assert(all(f.last_of_left_is_lowest() for f in other.fops))
         assert(all(f.last_of_right_is_lowest() for f in other.fops))
-        if not other._oneSided():
+        if not other._one_sided():
             return False
 
         while (not self.H.right and self.H.l_hi > other.H.l_lo):
@@ -73,7 +73,7 @@ class fringe:
         assert(all(f.last_of_right_is_lowest() for f in self.fops))
         return True
 
-    def _oneSided(self):
+    def _one_sided(self):
         if self.H.right:
             return False
         for f in islice(self.fops, 1, len(self)):
