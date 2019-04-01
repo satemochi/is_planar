@@ -20,11 +20,6 @@ class fringe:
             return diff < 0
         return self.H.l_hi < other.H.l_hi
 
-    def __eq__(self, other):
-        if not isinstance(other, fringe):
-            return NotImplemented
-        return self.L.l_lo == other.L.l_lo
-
     def __repr__(self):
         return ('\33[1m\33[91m{\33[0m' +
                 ' '.join([repr(c) for c in self.fops]) +
@@ -39,49 +34,45 @@ class fringe:
         return self.fops[-1]
 
     def merge(self, other):
-        assert(self.fops and other.fops)
-        assert(self < other or self == other)
-        assert(all(f.last_of_left_is_lowest() for f in other.fops))
-        assert(all(f.last_of_right_is_lowest() for f in other.fops))
-        if not other._one_sided():
-            return False
+        other._merge_t_alike_edges()
+        self._merge_t_opposite_edges_into(other)
+        if not self.H.right:    # self is one_sided
+            self._align_duplicates(other)
+        else:
+            self._make_onion_structure(other)
+        if other.H.left:
+            self.fops.extendleft([other.H])
 
+    def _merge_t_alike_edges(self):
+        if self.H.right:
+            raise Exception
+        for f in islice(self.fops, 1, len(self)):
+            if f.right:
+                raise Exception
+            self.H.left.extend(f.left)
+        self.fops = deque([self.fops[0]])
+
+    def _merge_t_opposite_edges_into(self, other):
         while (not self.H.right and self.H.l_hi > other.H.l_lo):
             other.H.right.extend(self.H.left)
             self.fops.popleft()
 
-        if not self.H.right:
-            if self.L.l_hi == other.H.l_lo:
-                other.H.left.pop()
-                if (not other.H.left or (other.H.right and
-                                         other.H.l_lo > other.H.r_lo)):
-                    other.H.c[0], other.H.c[1] = other.H.c[1], other.H.c[0]
-        else:
-            lo, hi = (0, 1) if self.H.l_hi < self.H.r_hi else (1, 0)
-            if other.H.l_lo < self.H.c[lo][0]:
-                return False
-            elif other.H.l_lo < self.H.c[hi][0]:
-                self.H.c[lo].extendleft(other.H.left)
-                self.H.c[hi].extendleft(other.H.right)
-                other.H.left.clear()
-                other.H.right.clear()
+    def _align_duplicates(self, other):
+        if self.L.l_hi == other.H.l_lo:
+            other.H.left.pop()
+            if (not other.H.left or (other.H.right and
+                                     other.H.l_lo > other.H.r_lo)):
+                other.H.c[0], other.H.c[1] = other.H.c[1], other.H.c[0]
 
-        if other.H.left:
-            self.fops.extendleft([other.H])
-
-        assert(all(f.last_of_left_is_lowest() for f in self.fops))
-        assert(all(f.last_of_right_is_lowest() for f in self.fops))
-        return True
-
-    def _one_sided(self):
-        if self.H.right:
-            return False
-        for f in islice(self.fops, 1, len(self)):
-            if f.right:
-                return False
-            self.H.left.extend(f.left)
-        self.fops = deque([self.fops[0]])
-        return True
+    def _make_onion_structure(self, other):
+        lo, hi = (0, 1) if self.H.l_hi < self.H.r_hi else (1, 0)
+        if other.H.l_lo < self.H.c[lo][0]:
+            raise Exception
+        elif other.H.l_lo < self.H.c[hi][0]:
+            self.H.c[lo].extendleft(other.H.left)
+            self.H.c[hi].extendleft(other.H.right)
+            other.H.left.clear()
+            other.H.right.clear()
 
     def prune(self, dfs_height):
         while (self.fops and self.H.left and self.H.l_hi >= dfs_height):

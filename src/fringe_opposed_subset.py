@@ -34,9 +34,3 @@ class fringe_opposed_subset:
     @property
     def r_hi(self):
         return self.c[1][0]
-
-    def last_of_left_is_lowest(self):
-        return self.l_lo == min(self.left)
-
-    def last_of_right_is_lowest(self):
-        return self.r_lo == min(self.right) if self.right else True

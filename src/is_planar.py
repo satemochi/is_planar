@@ -96,8 +96,9 @@ def lr_algorithm(g, root, visited):
         except StopIteration:
             dfs_stack.pop()
             if len(fringes) > 1:
-                f = merge_fringes(fringes[-1])
-                if f is None:
+                try:
+                    f = merge_fringes(fringes[-1])
+                except Exception:
                     return False
                 fringes.pop()
                 f.prune(dfs_heights[dfs_stack[-1][0]])
@@ -124,13 +125,12 @@ def merge_fringes(upper_fringes):
     -------
     new_fringe : fringe
         new_fringe is the merged fringe if upper_fringes do not contain any
-        violation against the left-right criterion, otherwise None.
+        violation against the left-right criterion.
     """
 
     if len(upper_fringes) > 0:
         upper_fringes.sort()
         new_fringe = upper_fringes[0]
         for f in islice(upper_fringes, 1, len(upper_fringes)):
-            if not new_fringe.merge(f):
-                return
+            new_fringe.merge(f)
     return new_fringe
