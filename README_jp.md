@@ -14,6 +14,9 @@ A python code which implements the LR-algorithm for testing planarity of given g
 
 **is_planar** は、[Pigale](http://pigale.sourceforge.net) のソースコードを大いに参考にしているため GPL ライセンスに準拠します。
 
+**is_planar** は、頂点数 10 までの全ての連結な平面的グラフでテストし、パスしています。平面グラフの情報は下記のサイトからお借りしました。
+[Combinatorial Data](https://users.cecs.anu.edu.au/~bdm/data/graphs.html).
+
 ## 利用要件
 - python 2.7
 - [networkx 2.2](https://networkx.github.io)
@@ -24,11 +27,6 @@ A python code which implements the LR-algorithm for testing planarity of given g
 ## Todo
 - API / コメント整備
     - docstring 
-- テストの充実
-    - 各モジュール単位で単体テストを行う
-    - 平面グラフのランダム生成
-    - 小さい平面グラフの列挙
-    - 与えられたグラフに対する全 DFS 木でテスト
 - 機能追加
     - 平面埋め込みの計算
     - Kuratowski 部分グラフの抽出

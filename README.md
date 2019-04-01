@@ -25,6 +25,11 @@ If consistent planarity test is the purpose, then we recommend
 **is_planar** conforms to the GPL license, as it is a good reference for the 
 [Pigale](http://pigale.sourceforge.net) source code.
 
+
+**is_planar** have been tested by all connected planar graphs up to 10
+vertices, and passed. The graph data are borrowed from
+[Combinatorial Data](https://users.cecs.anu.edu.au/~bdm/data/graphs.html).
+
 ## Requirements
 - python 2.7
 - [networkx 2.2](https://networkx.github.io)
@@ -35,11 +40,6 @@ If consistent planarity test is the purpose, then we recommend
 ## Todo
 - API / Comments
     - docstring 
-- Testing
-    - Do unit tests for each modules
-    - Do tests with all DFS orderings for a given graph
-    - Do random generations of planar graphs
-    - Do enumeration of small planar graphs
 - Functions
     - Computations for planar embeddings or Kuratowski subgraphs.
     - Plane drawings (Tutte embeddings and so on)
