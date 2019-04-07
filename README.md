@@ -26,9 +26,22 @@ If consistent planarity test is the purpose, then we recommend
 [Pigale](http://pigale.sourceforge.net) source code.
 
 
+## Features
 **is_planar** have been tested by all connected planar graphs up to 10
 vertices, and passed. The graph data are borrowed from
 [Combinatorial Data](https://users.cecs.anu.edu.au/~bdm/data/graphs.html).
+
+**is_planar** is short scripts. The SLOC is at most 160 lines, according to
+the code metrics evaluation tool
+[radon](https://radon.readthedocs.io/en/latest/).
+
+**is_planar** is faster than check_planarity of NetworkX if the purpose is
+just test its planarity. It may be unfair to compare with is_planar, since
+check_planarity can compute planar embedings and extract Kuratowski sugraphs.
+
+However, is_planar have tiny advantages, see misc/vs_check_planarity.py.
+![vs_check_planarity](https://github.com/satemochi/is_planar/blob/master/misc/vs_check_planarity_1.png)
+
 
 ## Requirements
 - python 2.7
@@ -40,14 +53,21 @@ vertices, and passed. The graph data are borrowed from
 ## Todo
 - API / Comments
     - docstring 
+- Tests
+    - Do efficient generation of all DFS orderings. The current generator is
+      naive, and cannot allow more than 10 vertices. Now we consider to
+      implement ZDD with frontier approachs.
+    - Do generation randomly large planar graphs. Now we consider to borrow
+      the Boltzmann sampler [5].
 - Functions
     - Computations for planar embeddings or Kuratowski subgraphs.
     - Plane drawings (Tutte embeddings and so on)
-    - Boyer-Myrvold algorithm [5]
+    - Boyer-Myrvold algorithm [6]
 
 ## References
 1. H. de Fraysseix and P. O. de Mendez. (2012). "**Trémaux trees and planarity**", European Journal of Combinatorics, 33 (3): 279–293.
 1. H. de Fraysseix, P. O. de Mendez, and P. Rosenstiehl, (2006). "**Trémaux Trees and Planarity**", International Journal of Foundations of Computer Science, 17 (5): 1017–1030.
 1. U. Brandes, (2009). "**The left-right planarity test**", [pdf](http://www.inf.uni-konstanz.de/algo/publications/b-lrpt-sub.pdf).
 1. M. J. Boyer, P. F. Cortese, M. Patrignani, and G. D. Battista, (2003), "**Stop minding your P's and Q's: implementing a fast and simple DFS-based planarity testing and embedding algorithm**", Proc. 11th Int. Symp. Graph Drawing (GD '03), Lecture Notes in Computer Science, 2912, Springer-Verlag, pp. 25–36
+1. E. Fusy, (2009), "**Uniform random sampling of planar graphs in linear time**", Random Structures and Algorithms 35(4): 464-522. [site](http://www.lix.polytechnique.fr/Labo/Eric.Fusy/)
 1. M. J. Boyer and  W. J. Myrvold. (2004). "**On the cutting edge: simplified O(n) planarity by edge addition**", Journal of Graph Algorithms and Applications, 8 (3): 241–273.

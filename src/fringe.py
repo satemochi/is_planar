@@ -4,7 +4,7 @@ from fringe_opposed_subset import fringe_opposed_subset as fop
 
 
 class fringe:
-    __slots__ = ('fops')
+    __slots__ = ['fops']
 
     def __init__(self, h=None):
         self.fops = deque() if h is None else deque([fop(h)])
@@ -69,16 +69,20 @@ class fringe:
         if other.H.l_lo < self.H.c[lo][0]:
             raise Exception
         elif other.H.l_lo < self.H.c[hi][0]:
-            self.H.c[lo].extendleft(other.H.left)
-            self.H.c[hi].extendleft(other.H.right)
+            self.H.c[lo].extendleft(reversed(other.H.left))
+            self.H.c[hi].extendleft(reversed(other.H.right))
             other.H.left.clear()
             other.H.right.clear()
 
     def prune(self, dfs_height):
         while (self.fops and self.H.left and self.H.l_hi >= dfs_height):
-            if len(self.H.left) == 1:
+            self.H.left.popleft()
+            if not self.H.left and not self.H.right:
                 self.fops.popleft()
-            else:
-                self.H.left.popleft()
         while (self.fops and self.H.right and self.H.r_hi >= dfs_height):
             self.H.right.popleft()
+        if self.fops and not self.H.left:
+            if self.H.right:
+                self.H.c[0], self.H.c[1] = self.H.c[1], self.H.c[0]
+            else:
+                self.fops.popleft()

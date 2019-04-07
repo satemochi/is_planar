@@ -2,7 +2,7 @@ from collections import deque
 
 
 class fringe_opposed_subset:
-    __slots__ = ('c')
+    __slots__ = ['c']
 
     def __init__(self, h):
         self.c = [deque([h]), deque()]
