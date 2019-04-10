@@ -110,13 +110,16 @@ def merge_fringes(fringes, dfs_height):
 
     Parameters
     ----------
-    fringes : list of lists of fringes
+    fringes : list of list of fringe
         The stack of fringes of all tree edges have been traversed. Except of
         the top, each list of fringes is under construction.
 
     dfs_height: int
-        Newly created fringes have no back edges which have DFS heigh greater
-        than or equal to dfs_height.
+        To be used as expiring condition so that back edges are caused to
+        exit from the fringe of the top tree edge (x, y).
+        The expired back edges are never crossing in the progress.
+        So, newly created fringes have no back edges which have DFS heigh
+        greater than or equal to dfs_height of x.
     """
 
     mf = get_merged_fringe(fringes[-1])
@@ -126,28 +129,34 @@ def merge_fringes(fringes, dfs_height):
         for f in fringes[-1]:
             f.prune(dfs_height)
             if not f.fops:
-                fringes[-1].pop()
+                fringes[-1].pop()   # may be bug, but i dont know how
 
 
 def get_merged_fringe(upper_fringes):
     """
     merge (upper) fringes
 
-    In order to construct the fringe of the tree edge (x, y) that is top of
-    dfs_stack, this function merges all fringes of tree edges outgoing from y.
+    In order to construct the fringe of the tree edge (x, y) that is
+    the top of dfs_stack, this function merges all fringes of tree edges
+    outgoing from y and back edges outgoing y.
 
     Parameters
     ----------
-    upper_fringes : list of fringes
-        upper_fringes consists of all fringes of tree edges outgoing from y.
+    upper_fringes : list of fringe
+        upper_fringes consists of all fringes of tree edges outgoing from y
+        and back edges outgoing from y.
         Further, for each back edge e in upper_fringes, the DFS height of
-        low-point low(e) is lower than dfs_heights[y].
+        lowpoint low(e) is lower than dfs_heights[y].
+        The definition of low(e) is found in Definition 2.1 [1]_.
 
     Returns
     -------
     new_fringe : fringe
         new_fringe is the merged fringe if upper_fringes do not contain any
         violation against the left-right criterion.
+        new_fringe may be None if upper_fringe is empty.
+        This might be a case in which given tree edge is a bridge (whose
+        deletion increases its number of connected components).
     """
 
     if len(upper_fringes) > 0:
