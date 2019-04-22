@@ -4,7 +4,7 @@ from fringe_opposed_subset import fringe_opposed_subset as fop
 
 
 class fringe:
-    """ The class of a fringe of a tree edge
+    r""" The class of a fringe of a tree edge
 
     This class maintains fringes of a tree edge (x, y).
 
@@ -18,19 +18,19 @@ class fringe:
         The fringe Fringe(e) of an edge e = (x, y) is defined by
 
         .. math:: \mathrm{Fringe}(e) = \{f in E \setminus T ~:~
-                          f \succeq e  and \mathrm{low}(f) \prec x\}.
-        
+                          f \succeq e ~\mathrm{and}~ \mathrm{low}(f) \prec x\}.
+
             - E : edge set of a given graph
             - T : tree edge set of a DFS tree (T is subset of E)
             - f : any back edge
             - low : destination vertex
             - binary relations compare between heights or traversal orders.
 
-        ...
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         In other words, the fringe of a tree edge e = (x, y) is the set of
-        all back edges linking a vertex in the subtree rooted at y and 
+        all back edges linking a vertex in the subtree rooted at y and
         a vertex strictly smaller than x.
-        ...
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     !!!Caution!!!
         The above is excerpt from the literature, we have a little correction.
@@ -44,8 +44,6 @@ class fringe:
 
     Attributes
     ----------
-    H
-    L
     fops : deque of fringe_opposed_subset
         The fringe of a tree edge (x, y) mainly consists of
         the fringe-opposed subsets for each tree edges outgoing from y.
@@ -55,6 +53,12 @@ class fringe:
         The number of elements in fops is less than or equal to
             the number of tree edges outgoing from y
              + the number of back edges outgoing from y.
+
+    H : The static pointer to the fringe-opposed subset containing a back edge
+        with the highest dfs_height in self.fops under __lt__.
+
+    L : The static pointer to fringe-opposed subset containing a back edge
+        with the lowest dfs_height in self.fops under __lt__.
 
     Methods
     _______
@@ -78,7 +82,7 @@ class fringe:
         """
         The ordering criterion for fringes
 
-        We intend to pack as many back edges as possible into the left side 
+        We intend to pack as many back edges as possible into the left side
         of a fringe-opposed subset. So, we make much account of
         the lower/higher LEFT low/high back edges.
         An important thing is which fringe is nested in the other.
@@ -90,7 +94,7 @@ class fringe:
         return self.H.l_hi < other.H.l_hi
 
     def __repr__(self):
-        """ print in terminal with colors 
+        """ print in terminal with colors
             see https://stackoverflow.com/questions/287871/
         """
         return ('\33[1m\33[91m{\33[0m' +
@@ -112,22 +116,23 @@ class fringe:
         Parameters
         ----------
         other : fringe
-            a fringe merged into self.
-            This is the part of the subtree rooted at y, or back edges
-            outgoing from y.
+            a fringe of a tree edge outgoing from the vertex y, where y is
+            the destination of the tree edge (x, y) corresponding to self, or
+            a fringe consisting of a single back edge outgoing from y.
 
         Notes
         -----
         A number of preconditions:
             - Both self and other have at least one fringe-opposed subset
-              with at least one back edge.
-              i.e., 'len(self) > 0' and 'len(other) > 0'
-            - self <= other. 
+              with at least one back edge, i.e.,
+                'len(self) > 0' and 'len(other) > 0'
+
+            - self <= other.
               This implies that the lowest lowpoint of self is lower than
-              the others. In other words, other is nested into the lowest 
+              the others. In other words, other is nested into the lowest
               back edge of fringe-opposed subset of self.
 
-              This assumption have a number of advantages. 
+              This assumption have a number of advantages.
               - We can immediately detect non-planarity, if other have a
                 two-sided fringe-opposed subset.
                 So, we can detect Kuratowski subgraphs from two components;
@@ -186,16 +191,39 @@ class fringe:
         ----------
         dfs_height : int
             To be used as a threshold whether is a back edge survived.
+
+        Notes
+        -----
+        We have to prove two statements;
+            1) prune completely remove all back edges of height dfs_height 
+            2) in O(n1) time, where n1 is the number of tree edges outgoing y.
+
+            The second one is obvious. We note that the number of back
+            edges outgoing from y are omitted, since our graph is simple
+            and the back edges have to connect to a vertex of height less
+            than dfs_height as the destination.
+
+            The first one is ...
+            First of all,
+                - we can assume that self fringe conforms the left-right
+                  criterion, and
+                - 'while loop' is progressed from inner to outer in
+                  the onion structure.
+            If self.fops consists of one fringe-opposed subset (fop) then
+            obvious, since it just check the highest in the both sides.
+            If self.fops consists of at least two fops containing the back
+            edge of dfs_height, each inner fop must be one-sided and
+            must consist of just one back edge, excluding the maximal exterior
+            one if exists. Q.E.D.
         """
 
-        while (self.fops and self.H.left and self.H.l_hi >= dfs_height):
-            self.H.left.popleft()
+        while (self.fops and ((self.H.left and self.H.l_hi >= dfs_height) or
+                              (self.H.right and self.H.r_hi >= dfs_height))):
+            if self.H.left and self.H.l_hi >= dfs_height:
+                self.H.left.popleft()
+            if self.H.right and self.H.r_hi >= dfs_height:
+                self.H.right.popleft()
             if not self.H.left and not self.H.right:
                 self.fops.popleft()
-        while (self.fops and self.H.right and self.H.r_hi >= dfs_height):
-            self.H.right.popleft()
-        if self.fops and not self.H.left:
-            if self.H.right:
+            elif not self.H.left and self.H.right:
                 self.H.c[0], self.H.c[1] = self.H.c[1], self.H.c[0]
-            else:
-                self.fops.popleft()

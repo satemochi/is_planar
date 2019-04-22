@@ -1,6 +1,7 @@
 from collections import defaultdict
 from itertools import islice
 from fringe import fringe
+import networkx as nx
 
 __all__ = ['is_planar']
 
@@ -19,10 +20,10 @@ def is_planar(g):
         If g has four methods size(), order(), v in g, and g[v], then
         is_planar does not require NetworkX.
 
-            1. size() : returns the number of edges
-            2. order() : returns the number of vertices
-            3. v in g: returns all vertices in g as iterable
-            4. g[v] : returns a list or iterable of the neighbors of a vertex v
+            1. size() : returns the number of edges as int
+            2. order() : returns the number of vertices as int
+            3. nodes(): returns all vertices in g as iterable
+            4. g[v] : returns the neighbors of a vertex v as iterable
 
     Returns
     -------
@@ -42,7 +43,7 @@ def is_planar(g):
     if g.size() > 3 * g.order() - 6:
         return False
     visited = defaultdict(lambda: False)
-    for v in g:
+    for v in g.nodes():
         if not visited[v]:
             visited[v] = True
             if not lr_algorithm(g, v, visited):
@@ -71,12 +72,13 @@ def lr_algorithm(g, root, visited):
         the left-right criterion, we have specified defaultdict.
 
         Noting that visited is the call by sharing, it is also accessed for
-        checking all components in graph g are completely searched.
+        checking all components in graph g are completely traversed.
 
     Returns
     -------
     result : bool
-        result is true if the graph is planar.
+        result is True if the connected component reached from root
+        in graph g is planar, else False.
     """
 
     fringes = [[]]
@@ -118,18 +120,16 @@ def merge_fringes(fringes, dfs_height):
         To be used as expiring condition so that back edges are caused to
         exit from the fringe of the top tree edge (x, y).
         The expired back edges are never crossing in the progress.
-        So, newly created fringes have no back edges which have DFS heigh
+        So, newly created fringes have no back edges which have DFS height
         greater than or equal to dfs_height of x.
     """
 
     mf = get_merged_fringe(fringes[-1])
     fringes.pop()
     if mf is not None and mf.fops:
-        fringes[-1].append(mf)
-        for f in fringes[-1]:
-            f.prune(dfs_height)
-            if not f.fops:
-                fringes[-1].pop()   # may be bug, but i dont know how
+        mf.prune(dfs_height)
+        if mf.fops:
+            fringes[-1].append(mf)
 
 
 def get_merged_fringe(upper_fringes):
@@ -152,11 +152,12 @@ def get_merged_fringe(upper_fringes):
     Returns
     -------
     new_fringe : fringe
-        new_fringe is the merged fringe if upper_fringes do not contain any
-        violation against the left-right criterion.
-        new_fringe may be None if upper_fringe is empty.
-        This might be a case in which given tree edge is a bridge (whose
-        deletion increases its number of connected components).
+        Returns new_fringe as the merged fringe if upper_fringes do not
+        contain any violation against the left-right criterion.
+
+        new_fringe may be None if upper_fringe is empty. This might be
+        a case in which the tree edge (on the top of dfs_stack) is a bridge
+        (whose deletion increases its number of connected components).
     """
 
     if len(upper_fringes) > 0:
