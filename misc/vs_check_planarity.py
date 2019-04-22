@@ -1,7 +1,6 @@
 import time
 import networkx as nx
 from matplotlib import pyplot as plt
-from matplotlib.ticker import ScalarFormatter
 from networkx.algorithms.planarity import check_planarity
 from is_planar import is_planar
 

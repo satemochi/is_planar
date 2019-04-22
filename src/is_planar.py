@@ -1,7 +1,6 @@
 from collections import defaultdict
 from itertools import islice
 from fringe import fringe
-import networkx as nx
 
 __all__ = ['is_planar']
 
@@ -17,7 +16,7 @@ def is_planar(g):
     g : networkx.Graph
         A simple undirected graph of NetworkX.
 
-        If g has four methods size(), order(), v in g, and g[v], then
+        If g has four methods size(), order(), nodes(), and g[v], then
         is_planar does not require NetworkX.
 
             1. size() : returns the number of edges as int

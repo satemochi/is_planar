@@ -38,7 +38,7 @@ the code metrics evaluation tool.
 - **is_planar** have been tested by **all connected simple graphs** up to 10
 vertices, and passed. The graph data are borrowed from
 [Combinatorial Data](https://users.cecs.anu.edu.au/~bdm/data/graphs.html).
-We use [pynauty](https://web.cs.dal.ca/~peter/software/pynauty/html/)
+We would use [pynauty](https://web.cs.dal.ca/~peter/software/pynauty/html/)
 for constructing a cheet sheet of planar graphs.
 
 - **is_planar** is faster than check_planarity of NetworkX if the purpose is
@@ -48,7 +48,6 @@ subgraphs.
 
 However, is_planar have tiny advantages, see misc/vs_check_planarity.py.
 ![vs_check_planarity](https://github.com/satemochi/is_planar/blob/master/misc/vs_check_planarity_1.png "log: on April 7th, 2019.")
-
 Log-scale! Cheating!? :-p
 
 ## Requirements
