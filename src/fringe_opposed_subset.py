@@ -13,7 +13,7 @@ class fringe_opposed_subset:
 
     Attributes
     ----------
-    c : list of deque of int
+    c : list of collections.deque of int
         The pair of left side back edges and right side ones.
         The left side back edges and right ones are T-opposed each other.
 

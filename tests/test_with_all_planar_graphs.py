@@ -11,7 +11,7 @@ class TestPlanarity(unittest.TestCase):
             https://users.cecs.anu.edu.au/~bdm/data/graphs.html
     """
     def test_three(self):
-        fname = 'planar_conn.3.g6'
+        fname = 'g/planar_conn.3.g6'
         if os.path.isfile(fname):
             expected = True
             with open(fname) as f:
@@ -20,7 +20,7 @@ class TestPlanarity(unittest.TestCase):
                     self.assertEqual(expected, actual)
 
     def test_four(self):
-        fname = 'planar_conn.4.g6'
+        fname = 'g/planar_conn.4.g6'
         if os.path.isfile(fname):
             expected = True
             with open(fname) as f:
@@ -29,7 +29,7 @@ class TestPlanarity(unittest.TestCase):
                     self.assertEqual(expected, actual)
 
     def test_five(self):
-        fname = 'planar_conn.5.g6'
+        fname = 'g/planar_conn.5.g6'
         if os.path.isfile(fname):
             expected = True
             with open(fname) as f:
@@ -38,7 +38,7 @@ class TestPlanarity(unittest.TestCase):
                     self.assertEqual(expected, actual)
 
     def test_six(self):
-        fname = 'planar_conn.6.g6'
+        fname = 'g/planar_conn.6.g6'
         if os.path.isfile(fname):
             expected = True
             with open(fname) as f:
@@ -47,7 +47,7 @@ class TestPlanarity(unittest.TestCase):
                     self.assertEqual(expected, actual)
 
     def test_seven(self):
-        fname = 'planar_conn.7.g6'
+        fname = 'g/planar_conn.7.g6'
         if os.path.isfile(fname):
             expected = True
             with open(fname) as f:
@@ -56,7 +56,7 @@ class TestPlanarity(unittest.TestCase):
                     self.assertEqual(expected, actual)
 
     def test_eight(self):
-        fname = 'planar_conn.8.g6'
+        fname = 'g/planar_conn.8.g6'
         if os.path.isfile(fname):
             expected = True
             with open(fname) as f:
@@ -65,7 +65,7 @@ class TestPlanarity(unittest.TestCase):
                     self.assertEqual(expected, actual)
 
     def test_nine(self):
-        fname = 'planar_conn.9.g6'
+        fname = 'g/planar_conn.9.g6'
         if os.path.isfile(fname):
             expected = True
             with open(fname, 'r+b') as f:
@@ -77,7 +77,7 @@ class TestPlanarity(unittest.TestCase):
 
     @unittest.skip('too much elapsed time')
     def test_ten(self):
-        fname = 'planar_conn.10.g6'
+        fname = 'g/planar_conn.10.g6'
         if os.path.isfile(fname):
             expected = True
             with open(fname) as f:

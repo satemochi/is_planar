@@ -16,18 +16,19 @@ def is_planar(g):
     g : networkx.Graph
         A simple undirected graph of NetworkX.
 
-        If g has four methods size(), order(), nodes(), and g[v], then
-        is_planar does not require NetworkX.
+        If g has four interfaces size(), order(), nodes(), and
+        g[v] or neighbors(v), then is_planar does not require NetworkX.
 
             1. size() : returns the number of edges as int
             2. order() : returns the number of vertices as int
             3. nodes(): returns all vertices in g as iterable
-            4. g[v] : returns the neighbors of a vertex v as iterable
+            4. g[v] or neighbors(v) :
+                        returns the neighbors of a vertex v as iterable
 
     Returns
     -------
-    result : bool
-        result is true if the graph is planar.
+    bool
+        True if the graph is planar otherwise False
 
     References
     ----------
@@ -41,16 +42,16 @@ def is_planar(g):
         return True
     if g.size() > 3 * g.order() - 6:
         return False
-    visited = defaultdict(lambda: False)
+    dfs_heights = defaultdict(lambda: -1)
     for v in g.nodes():
-        if not visited[v]:
-            visited[v] = True
-            if not lr_algorithm(g, v, visited):
+        if dfs_heights[v] < 0:
+            dfs_heights[v] = 0
+            if not lr_algorithm(g, v, dfs_heights):
                 return False
     return True
 
 
-def lr_algorithm(g, root, visited):
+def lr_algorithm(g, root, dfs_heights):
     """
     The framework of depth-first search (DFS) in the left-right algorithm.
 
@@ -60,38 +61,41 @@ def lr_algorithm(g, root, visited):
         A simple undirected graph of NetworkX.
 
     root : any hashable or immutable variable
-        A vertex for starting DFS, or DFS root.
+        A vertex in g for starting DFS, or DFS root.
 
-    visited : defaultdict
-        To be used as a checklist visiting vertices. So lr_algorithm assumes
-        that unvisited vertices are initialized with False. It is not
-        necessary to use defaultdict, else dict such as a map from V to
-        {True, False} may be appropriative. However, since lr_algorithm
+    dfs_heights : collections.defaultdict
+        This maintains DFS height for each vertex, or traversal order from
+        the root vertex. The DFS height of each root is 0.  In addition,
+        it is used as a checklist visiting vertices.  So lr_algorithm assumes
+        that each unvisited vertex is initialized with -1.
+
+        It is not necessary to use defaultdict, else dict such as a map
+        from V to domain [-1, 0, 1, ..., n], where n is the number of
+        vertex in g, may be appropriative.  However, since lr_algorithm
         immediately terminates as soon as finding a violation against
-        the left-right criterion, we have specified defaultdict.
+        the left-right criterion, so we have specified defaultdict.
 
-        Noting that visited is the call by sharing, it is also accessed for
-        checking all components in graph g are completely traversed.
+        Noting that dfs_heights is the call by sharing, it is also
+        accessed for checking all components in graph g are completely
+        traversed.
 
     Returns
     -------
-    result : bool
-        result is True if the connected component reached from root
-        in graph g is planar, else False.
+    bool
+        True if the connected component reachable from root is planar,
+        otherwise False.
     """
 
     fringes = [[]]
-    dfs_heights = defaultdict(lambda: 0)
     dfs_stack = [(root, iter(g[root]))]
     while dfs_stack:
         x, children = dfs_stack[-1]
         try:
             y = next(children)
-            if visited[y]:
+            if dfs_heights[y] >= 0:
                 if dfs_heights[x] > dfs_heights[y]:  # back edge
                     fringes[-1].append(fringe(dfs_heights[y]))
             else:   # tree edge
-                visited[y] = True
                 fringes.append([])
                 dfs_heights[y] = dfs_heights[x] + 1
                 dfs_stack.append((y, iter([u for u in g[y] if u != x])))
@@ -100,7 +104,7 @@ def lr_algorithm(g, root, visited):
             if len(fringes) > 1:
                 try:
                     merge_fringes(fringes, dfs_heights[dfs_stack[-1][0]])
-                except Exception as e:
+                except Exception:
                     return False
     return True
 
@@ -112,15 +116,13 @@ def merge_fringes(fringes, dfs_height):
     Parameters
     ----------
     fringes : list of list of fringe
-        The stack of fringes of all tree edges have been traversed. Except of
-        the top, each list of fringes is under construction.
+        The stack of fringes of all tree edges have been traversed. Except
+        the top of stack, each list of fringes is under construction.
 
     dfs_height: int
         To be used as expiring condition so that back edges are caused to
         exit from the fringe of the top tree edge (x, y).
         The expired back edges are never crossing in the progress.
-        So, newly created fringes have no back edges which have DFS height
-        greater than or equal to dfs_height of x.
     """
 
     mf = get_merged_fringe(fringes[-1])
@@ -137,25 +139,22 @@ def get_merged_fringe(upper_fringes):
 
     In order to construct the fringe of the tree edge (x, y) that is
     the top of dfs_stack, this function merges all fringes of tree edges
-    outgoing from y and back edges outgoing y.
+    outgoing from y and back edges outgoing from y.
 
     Parameters
     ----------
     upper_fringes : list of fringe
         upper_fringes consists of all fringes of tree edges outgoing from y
         and back edges outgoing from y.
-        Further, for each back edge e in upper_fringes, the DFS height of
-        lowpoint low(e) is lower than dfs_heights[y].
-        The definition of low(e) is found in Definition 2.1 [1]_.
 
     Returns
     -------
     new_fringe : fringe
-        Returns new_fringe as the merged fringe if upper_fringes do not
+        Returns new_fringe as the merged fringe if upper_fringes does not
         contain any violation against the left-right criterion.
 
-        new_fringe may be None if upper_fringe is empty. This might be
-        a case in which the tree edge (on the top of dfs_stack) is a bridge
+        new_fringe may be None if upper_fringe is empty. This is the case
+        in which the tree edge (on the top of dfs_stack) is a bridge
         (whose deletion increases its number of connected components).
     """
 

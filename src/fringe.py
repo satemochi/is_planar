@@ -9,8 +9,8 @@ class fringe:
     This class maintains fringe of a tree edge (x, y).
     The definition of the fringe can be found in [1]_.
 
-    Roughly, from Definition 2.2:
-        The fringe Fringe(e) of an edge e = (x, y) is defined by
+    Roughly, from Definition 2.2 in [1]_:
+        The fringe Fringe(e) of a tree edge e = (x, y) is defined by
 
         Fringe(e) = {f in E \ T : f >= e and low(f) < x}.
 
@@ -32,11 +32,11 @@ class fringe:
 
     Attributes
     ----------
-    fops : deque of fringe_opposed_subset
+    fops : collections.deque of fringe_opposed_subset
         The fringe of a tree edge (x, y) mainly consists of
-        the fringe-opposed subsets (fop) for each tree edges outgoing from y.
+        the fringe-opposed subsets for each tree edges outgoing from y.
         More strictly, it also contains one-sided single fringe-opposed
-        subset for each back edge outgoing from y.
+        subsets for each back edges outgoing from y.
 
         The number of elements in fops is less than or equal to
             n1 (the number of tree edges outgoing from y) +
@@ -70,8 +70,8 @@ class fringe:
 
     __slots__ = ['fops']
 
-    def __init__(self, h=None):
-        self.fops = deque() if h is None else deque([fop(h)])
+    def __init__(self, dfs_h=None):
+        self.fops = deque() if dfs_h is None else deque([fop(dfs_h)])
 
     def __len__(self):
         return len(self.fops)
@@ -129,7 +129,7 @@ class fringe:
             - self <= other.
               This implies that the lowest lowpoint of self is lower than
               the others. In other words, other is nested into the lowest
-              back edge of fringe-opposed subset of self.
+              back edge in self.
 
               This assumption have a number of advantages.
               - We can immediately detect non-planarity, if other have a

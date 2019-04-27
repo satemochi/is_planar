@@ -5,13 +5,18 @@ A python code which implements the left-right algorithm for testing planarity
 of given graphs.
 
 ## Description
-- **is_planar**  is a pure python code of the left-right algorithm that tests
-the planarity of given graphs in linear time [1, 2, 3].
+- **is_planar**  is a pure python code of the left-right algorithm [1, 2, 3]
+that tests the planarity of given graphs in linear time.
 
 - **is_planar** can determine the planarity with a computational complexity
 proportional to at most once depth-first search.
-The brevity of the left-right algorithm is not only easy to understand,
+The brevity is not only easy to understand,
 but also known to be the fastest one among some linear time algorithms [4].
+
+- **is_planar** conforms to the GPL license, as it is a good reference for the 
+[Pigale](http://pigale.sourceforge.net) source code.
+Thus, our left-right algorithm should be called as the
+[Daniel Ford](https://www.researchgate.net/profile/Daniel_Ford6)'s algorithm.
 
 - **is_planar** is an alpha version.
 If consistent planarity test is the purpose, we recommend
@@ -20,16 +25,11 @@ If consistent planarity test is the purpose, we recommend
 [boyer_myrvold_planar_test.hpp](https://www.boost.org/doc/libs/1_37_0/boost/graph/boyer_myrvold_planar_test.hpp) of
 [BGL](https://www.boost.org/doc/libs/1_37_0/libs/graph/doc/planar_graphs.html).
 
-- **is_planar** conforms to the GPL license, as it is a good reference for the 
-[Pigale](http://pigale.sourceforge.net) source code.
-Thus, our left-right algorithm should be called as the
-[Daniel Ford](https://www.researchgate.net/profile/Daniel_Ford6)'s algorithm.
-
 
 ## Features
 - **is_planar** is a short script.
-The SLOC is at most 160 lines while keeping good cyclomatic complexity and
-good maintainability index,
+The SLOC is at most 160 lines while keeping permissible cyclomatic complexity
+and maintainability index,
 according to [radon](https://radon.readthedocs.io/en/latest/),
 the code metrics evaluation tool.
 
@@ -39,13 +39,13 @@ We would borrow the graph data from
 [Combinatorial Data](https://users.cecs.anu.edu.au/~bdm/data/graphs.html).
 Further, we would use [nauty Traces](http://pallini.di.uniroma1.it) / 
 [pynauty](https://web.cs.dal.ca/~peter/software/pynauty/html/)
-for constructing a cheat sheet of planar graphs (see test/bit_setter.py).
+for constructing a cheat sheet of planar graphs (see tests/bit_setter.py).
 
 - **is_planar** is about 777% faster than check_planarity of NetworkX
 if the purpose is just tests of its planarity.
 It may be unfair to compare with is_planar,
 since check_planarity can compute planar embeddings and extract Kuratowski
-subgraphs.
+subgraphs as byproducts.
 
 However, is_planar have tiny advantages, see misc/vs_check_planarity.py.
 ![vs_check_planarity](https://github.com/satemochi/is_planar/blob/master/misc/vs_check_planarity_1.png "logging on April 22nd, 2019.")
