@@ -11,7 +11,7 @@ with open('LICENSE') as fp:
 
 setup(
     name="is_planar",
-    version="0.0.4",
+    version="0.0.5",
     description="a python code which implements the left-right algorithm \
                  for planarity testing given graphs",
     long_description=readme,
