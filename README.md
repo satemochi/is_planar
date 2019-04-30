@@ -7,11 +7,8 @@ of given graphs.
 ## Description
 - **is_planar**  is a pure python code of the left-right algorithm [1, 2, 3]
 that tests the planarity of given graphs in linear time.
-
-- **is_planar** can determine the planarity with a computational complexity
-proportional to at most once depth-first search.
 The brevity is not only easy to understand,
-but also known to be the fastest one among some linear time algorithms [4].
+but also known to be the fastest among some linear time algorithms [4].
 
 - **is_planar** conforms to the GPL license, as it is a good reference for the 
 [Pigale](http://pigale.sourceforge.net) source code.
@@ -39,9 +36,9 @@ We would borrow the graph data from
 [Combinatorial Data](https://users.cecs.anu.edu.au/~bdm/data/graphs.html).
 Further, we would use [nauty Traces](http://pallini.di.uniroma1.it) / 
 [pynauty](https://web.cs.dal.ca/~peter/software/pynauty/html/)
-for constructing a cheat sheet of planar graphs (see tests/bit_setter.py).
+for constructing a cheat sheet of planar graphs (see tests/g/bit_setter.py).
 
-- **is_planar** is about 777% faster than check_planarity of NetworkX
+- **is_planar** is about 777% faster than [check_planarity](https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.planarity.check_planarity.html) of [NetworkX](https://networkx.github.io)
 if the purpose is just tests of its planarity.
 It may be unfair to compare with is_planar,
 since check_planarity can compute planar embeddings and extract Kuratowski
@@ -52,8 +49,8 @@ However, is_planar have tiny advantages, see misc/vs_check_planarity.py.
 Log-scale! Cheating!? :-p
 
 ## Requirements
-- python 2.7
-- [networkx 2.2](https://networkx.github.io)
+- python 2.7 / 3.7
+- [networkx 2.2 / 2.3](https://networkx.github.io)
 
 ## License
 [GPL 2.0](https://github.com/satemochi/is_planar/blob/master/LICENSE)

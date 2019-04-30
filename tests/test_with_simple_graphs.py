@@ -36,7 +36,7 @@ class TestPlanarity(unittest.TestCase):
 
     def __framework(self, graph_data, cheat_sheet):
         if os.path.isfile(graph_data) and os.path.isfile(cheat_sheet):
-            with open(graph_data) as f:
+            with open(graph_data, 'rb') as f:
                 sg = f.read().splitlines()
             with open(cheat_sheet, 'rb') as f:
                 bit_vector = pickle.load(f)

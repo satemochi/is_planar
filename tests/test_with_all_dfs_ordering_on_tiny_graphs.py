@@ -55,7 +55,7 @@ class TestPlanarity(unittest.TestCase):
             actual = func(g)
             self.assertEqual(expected, actual)
 
-    @unittest.skip('too much elapsed time')
+#    @unittest.skip('too much elapsed time')
     def test_petersen(self):
         expected = False
         g = nx.petersen_graph()
@@ -75,11 +75,11 @@ def enumerate_dfs_ordering_naively(g):
 
 def is_dfs_ordering(graph, ordering):
     n = len(ordering)
-    for i in xrange(1, n-1):
+    for i in range(1, n-1):
         sub_ordering = ordering[:i]
         x = greatest_incident_index(graph, sub_ordering, ordering[i])
         y = max(greatest_incident_index(graph, sub_ordering, ordering[j])
-                for j in xrange(i+1, n))
+                for j in range(i+1, n))
         if x < y:
             return False
     return True
@@ -98,7 +98,7 @@ def spec_order(order):
 def get_ordered_graph(g, order):
     og = nx.OrderedGraph()
     og.add_nodes_from(order)
-    for i in xrange(1, len(order)):
+    for i in range(1, len(order)):
         v = order[i]
         u = order[greatest_incident_index(g, order[:i], v)]
         og.add_edge(u, v)

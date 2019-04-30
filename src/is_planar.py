@@ -71,7 +71,7 @@ def lr_algorithm(g, root, dfs_heights):
 
         It is not necessary to use defaultdict, else dict such as a map
         from V to domain [-1, 0, 1, ..., n], where n is the number of
-        vertex in g, may be appropriative.  However, since lr_algorithm
+        vertices in g, may be appropriative. However, since lr_algorithm
         immediately terminates as soon as finding a violation against
         the left-right criterion, so we have specified defaultdict.
 
@@ -125,8 +125,7 @@ def merge_fringes(fringes, dfs_height):
         The expired back edges are never crossing in the progress.
     """
 
-    mf = get_merged_fringe(fringes[-1])
-    fringes.pop()
+    mf = get_merged_fringe(fringes.pop())
     if mf is not None and mf.fops:
         mf.prune(dfs_height)
         if mf.fops:

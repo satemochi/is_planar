@@ -14,76 +14,72 @@ class TestPlanarity(unittest.TestCase):
         fname = 'g/planar_conn.3.g6'
         if os.path.isfile(fname):
             expected = True
-            with open(fname) as f:
-                for g in f:
-                    actual = is_planar(nx.from_graph6_bytes(g.rstrip('\n')))
+            with open(fname, 'rb') as f:
+                for g in f.read().splitlines():
+                    actual = is_planar(nx.from_graph6_bytes(g))
                     self.assertEqual(expected, actual)
 
     def test_four(self):
         fname = 'g/planar_conn.4.g6'
         if os.path.isfile(fname):
             expected = True
-            with open(fname) as f:
-                for g in f:
-                    actual = is_planar(nx.from_graph6_bytes(g.rstrip('\n')))
+            with open(fname, 'rb') as f:
+                for g in f.read().splitlines():
+                    actual = is_planar(nx.from_graph6_bytes(g))
                     self.assertEqual(expected, actual)
 
     def test_five(self):
         fname = 'g/planar_conn.5.g6'
         if os.path.isfile(fname):
             expected = True
-            with open(fname) as f:
-                for g in f:
-                    actual = is_planar(nx.from_graph6_bytes(g.rstrip('\n')))
+            with open(fname, 'rb') as f:
+                for g in f.read().splitlines():
+                    actual = is_planar(nx.from_graph6_bytes(g))
                     self.assertEqual(expected, actual)
 
     def test_six(self):
         fname = 'g/planar_conn.6.g6'
         if os.path.isfile(fname):
             expected = True
-            with open(fname) as f:
-                for g in f:
-                    actual = is_planar(nx.from_graph6_bytes(g.rstrip('\n')))
+            with open(fname, 'rb') as f:
+                for g in f.read().splitlines():
+                    actual = is_planar(nx.from_graph6_bytes(g))
                     self.assertEqual(expected, actual)
 
     def test_seven(self):
         fname = 'g/planar_conn.7.g6'
         if os.path.isfile(fname):
             expected = True
-            with open(fname) as f:
-                for g in f:
-                    actual = is_planar(nx.from_graph6_bytes(g.rstrip('\n')))
+            with open(fname, 'rb') as f:
+                for g in f.read().splitlines():
+                    actual = is_planar(nx.from_graph6_bytes(g))
                     self.assertEqual(expected, actual)
 
     def test_eight(self):
         fname = 'g/planar_conn.8.g6'
         if os.path.isfile(fname):
             expected = True
-            with open(fname) as f:
-                for g in f:
-                    actual = is_planar(nx.from_graph6_bytes(g.rstrip('\n')))
+            with open(fname, 'rb') as f:
+                for g in f.read().splitlines():
+                    actual = is_planar(nx.from_graph6_bytes(g))
                     self.assertEqual(expected, actual)
 
     def test_nine(self):
         fname = 'g/planar_conn.9.g6'
         if os.path.isfile(fname):
             expected = True
-            with open(fname, 'r+b') as f:
-                mm = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
-                sep = re.finditer('(.*)\n', mm)
-                for g in sep:
-                    actual = is_planar(nx.from_graph6_bytes(g.group(1)))
+            with open(fname, 'rb') as f:
+                for g in f.read().splitlines():
+                    actual = is_planar(nx.from_graph6_bytes(g))
                     self.assertEqual(expected, actual)
 
-    @unittest.skip('too much elapsed time')
     def test_ten(self):
         fname = 'g/planar_conn.10.g6'
         if os.path.isfile(fname):
             expected = True
-            with open(fname) as f:
-                mm = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
-                for g in iter(mm.readline, b''):
-                    actual = is_planar(nx.from_graph6_bytes(g.rstrip('\n')))
+            with open(fname, 'rb') as f:
+                for g in f.read().splitlines():
+                    actual = is_planar(nx.from_graph6_bytes(g))
                     self.assertEqual(expected, actual)
 
 

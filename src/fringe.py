@@ -4,7 +4,7 @@ from fringe_opposed_subset import fringe_opposed_subset as fop
 
 
 class fringe:
-    """ The class of a fringe of a tree edge
+    r""" The class of a fringe of a tree edge
 
     This class maintains fringe of a tree edge (x, y).
     The definition of the fringe can be found in [1]_.

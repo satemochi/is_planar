@@ -11,10 +11,10 @@ def vs_check_planarity(trials=100):
 #    N = [10, 50, 100, 500, 1000, 1500, 5000, 10000, 50000, 100000]
     ch_p, is_p = [], []
     for n in N:
-        print n
+        print(n)
         cp, ip = 0, 0
         p = 0
-        for i in xrange(trials):
+        for i in range(trials):
             g = nx.fast_gnp_random_graph(n, 5./n)
 
             s = time.time()
@@ -26,7 +26,7 @@ def vs_check_planarity(trials=100):
 
             if expected != actual:
                 nx.write_gml(g, 'g.gml')
-                print expected, actual
+                print(expected, actual)
             if expected:
                 p += 1
             g.clear()
