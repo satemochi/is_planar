@@ -18,7 +18,8 @@ class fringe:
             - T : tree edge set of a DFS tree (T is subset of E)
             - f : any back edge
             - low : destination vertex if for a back edge
-            - binary relations compare between heights or traversal orders.
+            - Each binary relation compares between heights or the distance
+              from the DFS root.
 
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         In other words, the fringe of a tree edge e = (x, y) is the set of
@@ -72,9 +73,6 @@ class fringe:
 
     def __init__(self, dfs_h=None):
         self.fops = deque() if dfs_h is None else deque([fop(dfs_h)])
-
-    def __len__(self):
-        return len(self.fops)
 
     def __lt__(self, other):
         """
@@ -139,6 +137,29 @@ class fringe:
                       lowest lowpoint in self,
                     - this two-sided fringe-opposed subset.
               - and so on...
+
+
+        We would like to cofirm correctness.
+        There are two facts easily checkable:
+
+            - At each raising an exception, we can construct Kuratowski
+              subgraph from the lowest back edge and the two-sided
+              fringe-opposed subset. Thereby, if given graph is planar,
+              we never return False as non-planar.
+                  (see _merge_t_alike_edges and _make_onion_structure)
+                  (see also 'An_extraction_of_Kuratowski_subgraph.png')
+
+            - The remaining is the case we are given non-planar graph,
+              and incorrectly return True as planar. It's never happend,
+              never, never...
+              Since after all tree edges are processed, all back edges could
+              have been colored either 1 (left) or -1 (right) when
+              it's pruned, depending on which side of the fringe-opposed
+              subset it belongs to.
+              This coloring admits the F-coloring defined in [1]_.
+                  (see _align_duplicates and prune)
+
+        This sketch is leading to valid proofs, isn't it?
         """
 
         other._merge_t_alike_edges()
@@ -173,7 +194,7 @@ class fringe:
 
         if self.H.right:
             raise Exception
-        for f in islice(self.fops, 1, len(self)):
+        for f in islice(self.fops, 1, len(self.fops)):
             if f.right:
                 raise Exception
             self.H.left.extend(f.left)

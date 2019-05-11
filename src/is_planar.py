@@ -22,13 +22,14 @@ def is_planar(g):
             1. size() : returns the number of edges as int
             2. order() : returns the number of vertices as int
             3. nodes(): returns all vertices in g as iterable
-            4. g[v] or neighbors(v) :
-                        returns the neighbors of a vertex v as iterable
+            4. g[v] or neighbors(v) : returns the neighbors of v as iterable
+                    If you would like to exchange to neighbor(), then
+                    just edit in the function lr_algorithm.
 
     Returns
     -------
     bool
-        True if the graph is planar otherwise False
+        True if the graph g is planar otherwise False
 
     References
     ----------
@@ -64,20 +65,21 @@ def lr_algorithm(g, root, dfs_heights):
         A vertex in g for starting DFS, or DFS root.
 
     dfs_heights : collections.defaultdict
-        This maintains DFS height for each vertex, or traversal order from
-        the root vertex. The DFS height of each root is 0.  In addition,
-        it is used as a checklist visiting vertices.  So lr_algorithm assumes
-        that each unvisited vertex is initialized with -1.
+        This maintains DFS height for each vertex, or the distance
+        (the number of vertices on the path) from the vertex root.
+        The DFS height of each root is 0.
+        In addition, it is used as a checklist visiting vertices, then
+        each unvisited vertex is initialized as -1.
 
         It is not necessary to use defaultdict, else dict such as a map
-        from V to domain [-1, 0, 1, ..., n], where n is the number of
-        vertices in g, may be appropriative. However, since lr_algorithm
-        immediately terminates as soon as finding a violation against
-        the left-right criterion, so we have specified defaultdict.
+        from V to a domain [-1, 0, 1, ..., n], where V is the vertex set of g
+        and n is the number of vertices in g, may be appropriative.
+        However, since lr_algorithm immediately terminates as soon as
+        finding a violation against the left-right criterion,
+        so we have specified defaultdict.
 
         Noting that dfs_heights is the call by sharing, it is also
-        accessed for checking all components in graph g are completely
-        traversed.
+        accessed for checking all components in g are completely traversed.
 
     Returns
     -------
@@ -92,13 +94,13 @@ def lr_algorithm(g, root, dfs_heights):
         x, children = dfs_stack[-1]
         try:
             y = next(children)
-            if dfs_heights[y] >= 0:
-                if dfs_heights[x] > dfs_heights[y]:  # back edge
-                    fringes[-1].append(fringe(dfs_heights[y]))
-            else:   # tree edge
+            if dfs_heights[y] < 0:  # tree edge
                 fringes.append([])
                 dfs_heights[y] = dfs_heights[x] + 1
                 dfs_stack.append((y, iter([u for u in g[y] if u != x])))
+            else:
+                if dfs_heights[x] > dfs_heights[y]:  # back edge
+                    fringes[-1].append(fringe(dfs_heights[y]))
         except StopIteration:
             dfs_stack.pop()
             if len(fringes) > 1:

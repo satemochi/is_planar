@@ -4,10 +4,10 @@ from collections import deque
 class fringe_opposed_subset:
     """ The class of the fringe-opposed subset
 
-    Roughly speaking, a fringe-opposed subset maintain the property of
-    the T-opposite/T-alike relations for traversed back edges.
-    The T-opposite (T-alike) means that two back edges will be on different
-    (same) sides of the DFS-tree in every planar drawing.
+    Roughly speaking, a fringe-opposed subset maintains the property of
+    the T-alike/T-opposite relations for traversed back edges.
+    The T-alike (T-opposite) means that two back edges will be on same
+    (different) side(s) of the DFS-tree in every planar drawing.
 
     The detailed definition for fringe-opposed subsets can be found in [1]_.
 
@@ -20,15 +20,15 @@ class fringe_opposed_subset:
         This does not maintain a back edge (x, y) itself,
         but the DFS-height of the destination (lowpoint) y.
 
-        The lowest height of back edges in the left is lower than the right
-        ones as far as possible.
+        The lowest height for back edges in the left is lower than the right
+        ones as far as possible. This is not an invariant.
 
         Each side is ordered according to DFS height, or the traversal order.
         The head has the highest lowpoint height, and the tail has the lowest.
 
         We use deque, since
-            - Back edges are expired from higher ones.
-            - T-alike back edges are concatenated from higher ones.
+            - Back edges are expired from higher ones (popleft).
+            - T-alike back edges are concatenated from lower side (extend).
             - And so on...
 
     References

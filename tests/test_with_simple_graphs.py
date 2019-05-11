@@ -7,7 +7,7 @@ from is_planar import is_planar
 
 
 class TestPlanarity(unittest.TestCase):
-    """ In this test, we use files 'planar_conn.?*.g6' can be fetched from
+    """ In this test, we use files 'graph?*c.g6' can be fetched from
             https://users.cecs.anu.edu.au/~bdm/data/graphs.html
 
         Each pickle file is made by bit_setter.py on 64-bit 4-core machine.
@@ -29,7 +29,7 @@ class TestPlanarity(unittest.TestCase):
         graph_data, cheat_sheet = 'g/graph9c.g6', 'g/planar_conn.9.pkl'
         self.__framework(graph_data, cheat_sheet)
 
-#    @unittest.skip('too much elapsed time')
+    @unittest.skip('too much elapsed time')
     def test_ten(self):
         graph_data, cheat_sheet = 'g/graph10c.g6', 'g/planar_conn.10.pkl'
         self.__framework(graph_data, cheat_sheet)
