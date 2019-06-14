@@ -119,41 +119,24 @@ class fringe:
 
         Notes
         -----
-        A number of preconditions:
-            - Both self and other have at least one fringe-opposed subset
-              with at least one back edge, i.e.,
-                'len(self) > 0' and 'len(other) > 0'
-
-            - self <= other.
-              This implies that the lowest lowpoint of self is lower than
-              the others. In other words, other is nested into the lowest
-              back edge in self.
-
-              This assumption have a number of advantages.
-              - We can immediately detect non-planarity, if other have a
-                two-sided fringe-opposed subset.
-                So, we can detect Kuratowski subgraphs from two components;
-                    - fundamental cycle of a back edge returning the
-                      lowest lowpoint in self,
-                    - this two-sided fringe-opposed subset.
-              - and so on...
-
-
         We would like to cofirm correctness.
         There are two facts easily checkable:
 
             - At each raising an exception, we can construct Kuratowski
-              subgraph from the lowest back edge and the two-sided
-              fringe-opposed subset. Thereby, if given graph is planar,
-              we never return False as non-planar.
+              subgraph (a subdivision of K5 or K3,3), from the lowest
+              back edge or an edge with the onion violation (see
+              _make_onion_structure_example.png) and the two-sided
+              fringe-opposed subset. Anyways, the induced subgraph of union of
+              edges in four fundamental cycles makes a Kuratowski subgraph.
+              Thereby, if given graph is planar, we never return False
+              as non-planar.
                   (see _merge_t_alike_edges and _make_onion_structure)
-                  (see also 'An_extraction_of_Kuratowski_subgraph.png')
+                  (see also An_extraction_of_Kuratowski_subgraph.png)
 
             - The remaining is the case we are given non-planar graph,
-              and incorrectly return True as planar. It's never happend,
-              never, never...
-              Since after all tree edges are processed, all back edges could
-              have been colored either 1 (left) or -1 (right) when
+              and incorrectly return True as planar. It's never happend.
+              Since after all tree edges are processed, all back edges
+              could have been colored either 1 (left) or -1 (right) when
               it's pruned, depending on which side of the fringe-opposed
               subset it belongs to.
               This coloring admits the F-coloring defined in [1]_.

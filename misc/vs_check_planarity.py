@@ -2,6 +2,8 @@ import time
 import networkx as nx
 from matplotlib import pyplot as plt
 from networkx.algorithms.planarity import check_planarity
+import sys
+sys.path.append('../src')
 from is_planar import is_planar
 
 
@@ -38,7 +40,7 @@ def vs_check_planarity(trials=100):
     plt.legend(loc='best')
     plt.xscale('log')
     plt.tight_layout()
-    plt.savefig('vs_check_planarity_1.png', bbox_inches='tight')
+#    plt.savefig('vs_check_planarity_1.png', bbox_inches='tight')
     plt.show()
 
 

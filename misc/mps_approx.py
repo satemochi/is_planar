@@ -1,5 +1,9 @@
 from matplotlib import pyplot as plt
 import networkx as nx
+import sys
+sys.path.append('../src')
+from is_planar import is_planar
+
 
 
 def mps_approx(g):
@@ -48,5 +52,5 @@ if __name__ == '__main__':
 
     plt.gca().axis('off')
     plt.tight_layout()
-    plt.savefig('mps_approx_1.png', bbox_inches='tight')
+#    plt.savefig('mps_approx_1.png', bbox_inches='tight')
     plt.show()
