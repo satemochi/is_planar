@@ -128,7 +128,7 @@ def merge_fringes(fringes, dfs_height):
     """
 
     mf = get_merged_fringe(fringes.pop())
-    if mf is not None and mf.fops:
+    if mf is not None:
         mf.prune(dfs_height)
         if mf.fops:
             fringes[-1].append(mf)
