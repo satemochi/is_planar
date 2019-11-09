@@ -1,0 +1,118 @@
+\documentclass[dvipdfmx]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{fullpage}
+
+\usepackage{hyperref}
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=red,
+  linkbordercolor={0 0 1}
+}
+
+
+\usepackage{listings}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{soul}
+\sethlcolor{GreenYellow}
+%\sethlcolor{Apricot}
+%\usepackage{lstlinebgrd}
+
+
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+\renewcommand\lstlistingname{アルゴリズム}
+\renewcommand\lstlistlistingname{アルゴリズム}
+%\def\lstlistingautorefname{アルゴリズム}
+\def\lstrefname{アルゴリズム}
+
+\usepackage[rflt]{floatflt}
+\usepackage{comment}
+\usepackage{paracol}
+\usepackage{url}
+
+\usepackage{cleveref}
+\newtheorem{theorem}{定理}
+\crefname{theorem}{定理}{Theorems}
+\newtheorem{lemma}{補題}
+\crefname{lemma}{補題}{Lemmas}
+\newtheorem{corollary}{系}[theorem]
+\crefname{corollary}{系}{Lemmas}
+\newtheorem{definition}{定義}
+\crefname{definition}{定義}{Definitions}
+
+
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+%\DeclareMathOperator*{\argmax}{arg\,max}
+%\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\argmin}{\mathop{\rm arg~min}\limits}
+\newcommand{\fargmin}{\mathop{\rm arg~min}}
+
+\DeclareMathOperator{\fringe}{fringe}
+\DeclareMathOperator{\fop}{{\sf Fop}}
+\DeclareMathOperator{\low}{low}
+\DeclareMathOperator{\orient}{orient}
+
+
+
+%\usepackage[document]{ragged2e}
+
+\usepackage[dvipdfmx]{graphicx}
+
+\renewcommand{\figurename}{図}
+
+\makeatletter
+ \def\SOUL@hlpreamble{%
+ \setul{}{2.ex}%         !!!change this value!!! default is 2.5ex
+ \let\SOUL@stcolor\SOUL@hlcolor
+ \SOUL@stpreamble
+ }
+\makeatother
+%\newcommand{\hlpink}[1]{\sethlcolor{Goldenrod}\hl{\mbox{#1}}}
+\newcommand{\hlpink}[1]{#1}
+
+\title{グラフの平面性}
+\author{さてもち}
+\date{September 2019}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%\maketitle
+
+\input{introduction.tex}
+\input{definitions.tex}
+\newpage
+\input{properties.tex}
+\newpage
+\input{designs.tex}
+\input{algorithms.tex}
+
+\end{document}
