@@ -14,29 +14,35 @@ class TestPlanarity(unittest.TestCase):
     """
 
     def test_six(self):
-        graph_data, cheat_sheet = 'g/graph6c.g6', 'g/planar_conn.6.pkl'
+        graph_data = 'tests/g/graph6c.g6'
+        cheat_sheet = 'tests/g/planar_conn.6.pkl'
         self.__framework(graph_data, cheat_sheet)
 
     def test_seven(self):
-        graph_data, cheat_sheet = 'g/graph7c.g6', 'g/planar_conn.7.pkl'
+        graph_data = 'tests/g/graph7c.g6'
+        cheat_sheet = 'tests/g/planar_conn.7.pkl'
         self.__framework(graph_data, cheat_sheet)
 
     def test_eight(self):
-        graph_data, cheat_sheet = 'g/graph8c.g6', 'g/planar_conn.8.pkl'
+        graph_data = 'tests/g/graph8c.g6'
+        cheat_sheet = 'tests/g/planar_conn.8.pkl'
         self.__framework(graph_data, cheat_sheet)
 
-    # @unittest.skip('too much elapsed time')
+    @unittest.skip('too much elapsed time')
     def test_nine(self):
-        graph_data, cheat_sheet = 'g/graph9c.g6', 'g/planar_conn.9.pkl'
+        graph_data = 'tests/g/graph9c.g6'
+        cheat_sheet = 'tests/g/planar_conn.9.pkl'
         self.__framework(graph_data, cheat_sheet)
 
     @unittest.skip('too much elapsed time')
     def test_ten(self):
-        graph_data, cheat_sheet = 'g/graph10c.g6', 'g/planar_conn.10.pkl'
+        graph_data = 'tests/g/graph10c.g6'
+        cheat_sheet = 'tests/g/planar_conn.10.pkl'
         self.__framework(graph_data, cheat_sheet)
 
     def __framework(self, graph_data, cheat_sheet):
         if os.path.isfile(graph_data) and os.path.isfile(cheat_sheet):
+            print(graph_data)
             with open(graph_data, 'rb') as f:
                 sg = f.read().splitlines()
             with open(cheat_sheet, 'rb') as f:

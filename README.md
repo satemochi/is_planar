@@ -60,7 +60,7 @@ is_planar.py - A (33.17)
 We would borrow the graph data from the 
 [Combinatorial Data](https://users.cecs.anu.edu.au/~bdm/data/graphs.html).
 
-You can try our exhaustive tests. If the number of vertices is up to 9 (0.3 million graphs), then it may finish in 5 seconds, but we cannot be sure. Do this after fetching `graph*c.g6` ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/$0)) from the site, and place in the directory `tests/g`. Then, enter the following commands at the top of the `is_planar` directory:
+You can try our exhaustive tests. If the number of vertices is up to 9 (at most 0.26 million graphs), then it may finish in 30 seconds, but we cannot be sure. Do this after fetching `graph*c.g6` ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/$0)) from the site, and place in the directory `tests/g`. Then, enter the following commands at the top of the `is_planar` directory:
 
 ```console
 $ ls tests/g
