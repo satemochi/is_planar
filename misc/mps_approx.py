@@ -1,7 +1,7 @@
+import sys
 from matplotlib import pyplot as plt
 import networkx as nx
-import sys
-sys.path.append('../src')
+sys.path.append('..')
 from is_planar import is_planar     # noqa: 402
 
 
@@ -32,8 +32,9 @@ def mps_approx(g):
     """
 
     t = nx.minimum_spanning_tree(g)
-    unprocessed = [e for e in g.edges() if not t.has_edge(*e)]
-    for x, y in unprocessed:
+    for x, y in g.edges:
+        if t.has_edge(x, y):
+            continue
         t.add_edge(x, y)
         if not is_planar(t):
             t.remove_edge(x, y)
@@ -49,6 +50,7 @@ if __name__ == '__main__':
     nx.draw_networkx_edges(p, pos, edge_color='orange', width=2)
     nx.draw_networkx_nodes(g, pos, node_size=100)
 
+    plt.gca().set_aspect('equal')
     plt.gca().axis('off')
     plt.tight_layout()
 #    plt.savefig('mps_approx_1.png', bbox_inches='tight')

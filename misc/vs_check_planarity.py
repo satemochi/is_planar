@@ -1,9 +1,8 @@
-import time
-import networkx as nx
-from matplotlib import pyplot as plt
-from networkx.algorithms.planarity import check_planarity
 import sys
-sys.path.append('../src')
+import time
+from matplotlib import pyplot as plt
+import networkx as nx
+sys.path.append('..')
 from is_planar import is_planar     # noqa: E402
 
 
@@ -22,7 +21,7 @@ def vs_check_planarity(trials=100):
             s = time.time()
             actual = is_planar(g)
             e = time.time()
-            expected, _ = check_planarity(g)
+            expected = nx.is_planar(g)
             cp += time.time() - e
             ip += e - s
 
@@ -35,7 +34,7 @@ def vs_check_planarity(trials=100):
         ch_p.append(float(cp) / trials)
         is_p.append(float(ip) / trials)
 #        print float(p) / trials
-    plt.plot(N, ch_p, label='check_planarity', marker='o')
+    plt.plot(N, ch_p, label='nx.is_planar', marker='o')
     plt.plot(N, is_p, label='is_planar', marker='o')
     plt.legend(loc='best')
     plt.xscale('log')

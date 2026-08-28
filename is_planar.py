@@ -24,8 +24,8 @@ def __lr_algorithm(g, root, dfs_heights):
         try:
             y = next(children)
             if y not in dfs_heights:  # tree edge
-                fringes.append([])
                 dfs_heights[y] = dfs_heights[x] + 1
+                fringes.append([])
                 dfs_stack.append((y, iter([u for u in g[y] if u != x])))
             else:
                 if dfs_heights[x] > dfs_heights[y]:  # back edge
