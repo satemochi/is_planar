@@ -11,7 +11,7 @@ def cl(g6):
     g = nx.from_graph6_bytes(g6)
     adj = {v: list(g[v]) for v in g}
     nauty_graph = pynauty.Graph(g.order(), adjacency_dict=adj)
-    s =  pynauty.certificate(nauty_graph)
+    s = pynauty.certificate(nauty_graph)
     g.clear()
     del nauty_graph
     return s

@@ -2,8 +2,7 @@ from matplotlib import pyplot as plt
 import networkx as nx
 import sys
 sys.path.append('../src')
-from is_planar import is_planar
-
+from is_planar import is_planar     # noqa: 402
 
 
 def mps_approx(g):

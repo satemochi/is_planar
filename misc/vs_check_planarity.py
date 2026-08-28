@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 from networkx.algorithms.planarity import check_planarity
 import sys
 sys.path.append('../src')
-from is_planar import is_planar
+from is_planar import is_planar     # noqa: E402
 
 
 def vs_check_planarity(trials=100):

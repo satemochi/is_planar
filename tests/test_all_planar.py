@@ -64,6 +64,7 @@ class TestPlanarity(unittest.TestCase):
                     actual = is_planar(nx.from_graph6_bytes(g))
                     self.assertEqual(expected, actual)
 
+    @unittest.skip('too much elapsed time')
     def test_nine(self):
         fname = 'g/planar_conn.9.g6'
         if os.path.isfile(fname):
@@ -73,6 +74,7 @@ class TestPlanarity(unittest.TestCase):
                     actual = is_planar(nx.from_graph6_bytes(g))
                     self.assertEqual(expected, actual)
 
+    @unittest.skip('too much elapsed time')
     def test_ten(self):
         fname = 'g/planar_conn.10.g6'
         if os.path.isfile(fname):

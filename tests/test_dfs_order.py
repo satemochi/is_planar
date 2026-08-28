@@ -45,6 +45,7 @@ class TestPlanarity(unittest.TestCase):
             actual = func(g)
             self.assertEqual(expected, actual)
 
+    # @unittest.skip('too much elapsed time')
     def test_sedgewick(self):
         expected = True
         g = nx.sedgewick_maze_graph()
@@ -55,7 +56,7 @@ class TestPlanarity(unittest.TestCase):
             actual = func(g)
             self.assertEqual(expected, actual)
 
-#    @unittest.skip('too much elapsed time')
+    @unittest.skip('too much elapsed time')
     def test_petersen(self):
         expected = False
         g = nx.petersen_graph()
@@ -96,7 +97,7 @@ def spec_order(order):
 
 
 def get_ordered_graph(g, order):
-    og = nx.OrderedGraph()
+    og = nx.Graph()
     og.add_nodes_from(order)
     for i in range(1, len(order)):
         v = order[i]

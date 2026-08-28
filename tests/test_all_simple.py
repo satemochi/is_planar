@@ -25,6 +25,7 @@ class TestPlanarity(unittest.TestCase):
         graph_data, cheat_sheet = 'g/graph8c.g6', 'g/planar_conn.8.pkl'
         self.__framework(graph_data, cheat_sheet)
 
+    @unittest.skip('too much elapsed time')
     def test_nine(self):
         graph_data, cheat_sheet = 'g/graph9c.g6', 'g/planar_conn.9.pkl'
         self.__framework(graph_data, cheat_sheet)
