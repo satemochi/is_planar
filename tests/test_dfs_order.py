@@ -45,7 +45,6 @@ class TestPlanarity(unittest.TestCase):
             actual = func(g)
             self.assertEqual(expected, actual)
 
-    # @unittest.skip('too much elapsed time')
     def test_sedgewick(self):
         expected = True
         g = nx.sedgewick_maze_graph()
