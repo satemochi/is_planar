@@ -49,7 +49,7 @@ according to the [Radon](https://radon.readthedocs.io/en/latest/).
 However, the names of each function/method may need more refinement.
 
 The result on maintainability index of `is_planar.py`.
-```console
+```shell
 $ radon mi -s is_planar.py 
 is_planar.py - A (33.17)
 ```
@@ -62,7 +62,7 @@ We would borrow the graph data from the
 
 You can try our exhaustive tests. If the number of vertices is up to 9 (0.3 million graphs), then it may finish in 5 seconds, but we cannot be sure. Do this after fetching `graph*c.g6` ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/$0)) from the site, and place in the directory `tests/g`. Then, enter the following commands at the top of the `is_planar` directory:
 
-```console
+```bash
 $ ls tests/g
 bit_setter.py         graph7c.g6            planar_conn.6.pkl
 bit_setter_serial.py  graph8c.g6            planar_conn.7.pkl
