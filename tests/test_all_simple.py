@@ -28,13 +28,13 @@ class TestPlanarity(unittest.TestCase):
         cheat_sheet = 'tests/g/planar_conn.8.pkl'
         self.__framework(graph_data, cheat_sheet)
 
-    @unittest.skip('too much elapsed time')
+    # @unittest.skip('too much elapsed time')
     def test_nine(self):
         graph_data = 'tests/g/graph9c.g6'
         cheat_sheet = 'tests/g/planar_conn.9.pkl'
         self.__framework(graph_data, cheat_sheet)
 
-    @unittest.skip('too much elapsed time')
+    # @unittest.skip('too much elapsed time')
     def test_ten(self):
         graph_data = 'tests/g/graph10c.g6'
         cheat_sheet = 'tests/g/planar_conn.10.pkl'

@@ -26,7 +26,7 @@ We only use NetworkX for graph containers, since its API is very wonderful.
 
 ## Installation
 1. Download `is_planar.py` file, and
-1. Copy and place it in any directory included in the `PYTHONPATH` variable.
+1. copy and place it in any directory included in the `PYTHONPATH` variable.
 
 
 
@@ -60,7 +60,7 @@ is_planar.py - A (33.17)
 We would borrow the graph data from the 
 [Combinatorial Data](https://users.cecs.anu.edu.au/~bdm/data/graphs.html).
 
-You can try our exhaustive tests. If the number of vertices is up to 9 (at most 0.26 million graphs), then it may finish in 30 seconds, but we cannot be sure. Do this after fetching `graph*c.g6` ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/$0)) from the site, and place in the directory `tests/g`. Then, enter the following commands at the top of the `is_planar` directory:
+You can try our exhaustive tests. We cannot say for certain, but it might take around 30 minutes to complete. Do this after fetching `graph*c.g6` ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/$0)) from the site, and place in the directory `tests/g`. Then, enter the following commands at the top of the `is_planar` directory:
 
 ```console
 $ ls tests/g
@@ -70,6 +70,17 @@ graph10c.g6           graph9c.g6            planar_conn.8.pkl
 graph6c.g6            planar_conn.10.pkl    planar_conn.9.pkl
 
 $ python -m pytest
+============================= test session starts ==============================
+platform darwin -- Python 3.13.5, pytest-9.1.1, pluggy-1.6.0
+rootdir: ~/progs/is_planar
+collected 65 items
+
+tests/test_all_simple.py .....                                           [  7%]
+tests/test_dfs_order.py ....s.                                           [ 16%]
+tests/test_named_graphs.py ............................................. [ 86%]
+.........                                                                [100%]
+
+================== 64 passed, 1 skipped in 1410.70s (0:23:30) ==================
 ```
 
 
