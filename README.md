@@ -137,7 +137,7 @@ tests/test_named_graphs.py ............................................. [ 86%]
 
 Our implementation still seems difficult to understand.
 Therefore, we have prepared a fundamental step: two-edge connectivity
-(see [examples/is_two_edge_connected/](https://github.com/satemochi/saaaaah/blob/master/is_planar/examples/is_two_edge_connected/)).
+(see [examples/is_two_edge_connected/](https://github.com/satemochi/is_planar/tree/master/examples/is_two_edge_connected)).
 This example shows how to use ``fringe`` and ``fops`` classes.
 
 The bridge finding algorithm (due to Hopcroft and Tarjan) can be found in the
