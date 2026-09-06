@@ -53,6 +53,27 @@ $ radon mi -s is_planar.py
 is_planar.py - A (33.17)
 ```
 
+The result on raw of ``is_planar.py`` is as follows: 
+This implies that the logical lines are at most 140 and that
+renaming the sentences (i.e., the ``@property`` attributes)
+takes around 30 lines.
+```console
+$ radon raw is_planar.py
+is_planar.py
+    LOC: 168
+    LLOC: 136
+    SLOC: 137
+    Comments: 3
+    Single comments: 0
+    Multi: 0
+    Blank: 31
+    - Comment Stats
+        (C % L): 2%
+        (C % S): 2%
+        (C + M % L): 2%
+```
+
+
 
 - `is_planar` function has been tested on **all connected simple graphs** with
 up to 10 vertices (approximately 12 million graphs in total), and has passed.
@@ -71,7 +92,7 @@ graph6c.g6            planar_conn.10.pkl    planar_conn.9.pkl
 $ python -m pytest
 ============================= test session starts ==============================
 platform darwin -- Python 3.13.5, pytest-9.1.1, pluggy-1.6.0
-rootdir: ~/progs/is_planar
+rootdir: /Users/satemochi/progs/is_planar
 collected 65 items
 
 tests/test_all_simple.py .....                                           [  7%]
@@ -81,6 +102,26 @@ tests/test_named_graphs.py ............................................. [ 86%]
 
 ================== 64 passed, 1 skipped in 1410.70s (0:23:30) ==================
 ```
+
+
+## Tips
+
+Our implementation still seems difficult to understand.
+Therefore, we have prepared a fundamental step: two-edge connectivity
+(see [examples/is_two_edge_connected/](https://github.com/satemochi/saaaaah/blob/master/is_planar/example/is_two_edge_connected/)).
+This example shows how to use ``fringe`` and ``fops`` classes.
+
+The bridge finding algorithm (due to Hopcroft and Tarjan) can be found in the
+[Wikipedia](https://en.wikipedia.org/wiki/Biconnected_component) article.
+Metaphorically speaking,
+this algorithm just observes the race of
+"the lowest fringe" against "backtracking".
+
+
+**is_planar** has the same framework as ``is_two_edge_connected`` function.
+Once we understood the [left-right planarity condition](https://en.wikipedia.org/wiki/Left-right_planarity_test),
+we realized that our implementation was extremely simple.
+
 
 
 ## References
