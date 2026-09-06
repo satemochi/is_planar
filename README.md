@@ -47,10 +47,39 @@ It has about 170 lines of code while maintaining
 permissible cyclomatic complexity and maintainability index,
 according to the [Radon](https://radon.readthedocs.io/en/latest/).
 
-For example, the result on maintainability index of `is_planar.py` is as follow:
+For example, the result on maintainability index and cyclomatic complexity
+of `is_planar.py` is as follow:
 ```console
 $ radon mi -s is_planar.py 
 is_planar.py - A (33.17)
+
+$ radon cc is_planar.py
+is_planar.py
+    F 20:0 __lr_algorithm - B
+    M 121:4 fringe.prune - B
+    F 6:0 is_planar - B
+    C 59:0 fringe - A
+    M 88:4 fringe.__merge_t_alike_edges - A
+    M 107:4 fringe.__swap_side - A
+    M 111:4 fringe.__make_onion_structure - A
+    F 43:0 __merge_fringes - A
+    F 50:0 __get_merged_fringe - A
+    M 78:4 fringe.merge - A
+    M 97:4 fringe.__merge_t_opposite_edges_into - A
+    M 135:4 fringe.__lr_condition - A
+    M 62:4 fringe.__init__ - A
+    M 65:4 fringe.__lt__ - A
+    M 102:4 fringe.__align_duplicates - A
+    C 140:0 fop - A
+    M 71:4 fringe.H - A
+    M 75:4 fringe.L - A
+    M 143:4 fop.__init__ - A
+    M 147:4 fop.left - A
+    M 151:4 fop.right - A
+    M 155:4 fop.l_lo - A
+    M 159:4 fop.l_hi - A
+    M 163:4 fop.r_lo - A
+    M 167:4 fop.r_hi - A
 ```
 
 The result on raw of ``is_planar.py`` is as follows: 
@@ -108,7 +137,7 @@ tests/test_named_graphs.py ............................................. [ 86%]
 
 Our implementation still seems difficult to understand.
 Therefore, we have prepared a fundamental step: two-edge connectivity
-(see [examples/is_two_edge_connected/](https://github.com/satemochi/saaaaah/blob/master/is_planar/example/is_two_edge_connected/)).
+(see [examples/is_two_edge_connected/](https://github.com/satemochi/saaaaah/blob/master/is_planar/examples/is_two_edge_connected/)).
 This example shows how to use ``fringe`` and ``fops`` classes.
 
 The bridge finding algorithm (due to Hopcroft and Tarjan) can be found in the
