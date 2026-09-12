@@ -2,14 +2,13 @@ from collections import deque
 from itertools import islice
 
 
-def is_two_edge_connected(g):  # whether g is 2-edge-connected graph?
-    if g.order() < 1:
+def is_two_edge_connected(g):
+    if (n := g.order()) < 1:
         return False
-    dfs_heights, root = {}, next(iter(g))
-    dfs_heights[root] = 0
+    dfs_heights, root = {(root := next(iter(g))): 0}, next(iter(g))
     if __detect_bridge(g, root, dfs_heights):  # if g has a bridge, then False
         return False
-    if len(dfs_heights) != g.order():   # not connected graph
+    if len(dfs_heights) != n:   # disconnected
         return False
     return True
 
@@ -59,9 +58,6 @@ class fringe:
 
     def __init__(self, dfs_h=None):
         self.fops = deque() if dfs_h is None else deque([fop(dfs_h)])
-
-    def __repr__(self):
-        return str(self.L.l_lo)
 
     @property
     def H(self):
