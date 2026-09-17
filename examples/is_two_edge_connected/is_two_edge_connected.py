@@ -5,7 +5,7 @@ from itertools import islice
 def is_two_edge_connected(g):
     if (n := g.order()) < 1:
         return False
-    dfs_heights, root = {(root := next(iter(g))): 0}, next(iter(g))
+    dfs_heights = {(root := next(iter(g))): 0}
     if __detect_bridge(g, root, dfs_heights):  # if g has a bridge, then False
         return False
     if len(dfs_heights) != n:   # disconnected
